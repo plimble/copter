@@ -35,6 +35,7 @@ func New(options *Options) *Copter {
 }
 
 func (copter *Copter) ExecW(name string, context map[string]interface{}, w http.ResponseWriter) {
+	w.WriteHeader(http.StatusOK)
 	tpl, err := copter.Set.FromCache(name)
 	if err != nil {
 		panic(err)
