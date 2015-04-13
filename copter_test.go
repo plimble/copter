@@ -11,6 +11,8 @@ import (
 func TestExec(t *testing.T) {
 
 	os.MkdirAll("tpl/test/test2", 0755)
+	defer os.RemoveAll("tpl")
+
 	data := "<html><body>Hello {{name}}</body></html>"
 	ioutil.WriteFile("tpl/test/test2/test.html", []byte(data), 0755)
 	ioutil.WriteFile("tpl/test/test2/test2.html", []byte(data), 0755)
@@ -25,7 +27,5 @@ func TestExec(t *testing.T) {
 	copter.ExecW("test/test2/test2.html", Context{"name": "test"}, w)
 
 	assert.Equal(t, "<html><body>Hello test</body></html>", w.Body.String())
-
-	os.RemoveAll("tpl")
 
 }
